@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Fulham Gardens Primary School",
+    "address": "5 Mitton Ave Henley Beach SA 5022",
+    "years_taught": "primary",
+    "gender": "co-ed",
+    "type": "public",
+    "religious": false,
+    "preschool": false,
+    "osch": true,
+    "website": "https://fulhmgdnps.sa.edu.au/",
+    "latitude": -34.91157480120727, 
+    "longitude": 138.50443909088443 
+  },
+  {
+    "id": 2,
+    "name": "Valley View Secondary School",
+    "address": "240 Wright Rd Para Vista SA 5093",
+    "years_taught": "secondary",
+    "gender": "co-ed",
+    "type": "public",
+    "religious": false,
+    "preschool": false,
+    "osch": false,
+    "website": "https://www.valleyview.sa.edu.au/",
+    "latitude": -34.83219305450151,
+    "longitude": 138.65665358513007 
+  },
+  {
+    "id": 3,
+    "name": "Temple Christian College - Mile End",
+    "address": "96 Henley Beach Rd, Mile End SA 5031",
+    "years_taught": "secondary",
+    "gender": "co-ed",
+    "type": "private",
+    "religious": true,
+    "preschool": false,
+    "osch": false,
+    "website": "https://tcc.sa.edu.au/templechristiancollege-mile-end",
+    "latitude": -34.920845022662895,
+    "longitude": 138.57838830074144
+  },
+  {
+    "id": 4,
+    "name": "St Aloysius College",
+    "address": "53 Wakefield St, Adelaide SA 5000",
+    "years_taught": "combined",
+    "gender": "girls",
+    "type": "private",
+    "religious": true,
+    "preschool": false,
+    "osch": true,
+    "website": "https://www.sac.sa.edu.au/",
+    "latitude": -34.92781198349417,
+    "longitude": 138.60308647038215
+  },
+  {
+    "id": 5,
+    "name": "Christian Brothers College",
+    "address": "214 Wakefield St, Adelaide SA 5000",
+    "years_taught": "combined",
+    "gender": "boys",
+    "type": "private",
+    "religious": true,
+    "preschool": false,
+    "osch": true,
+    "website": "http://www.cbc.sa.edu.au/",
+    "latitude": -34.92768443711273,
+    "longitude": 138.6094406357512
+  }
+]

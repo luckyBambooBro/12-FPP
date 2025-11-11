@@ -6,7 +6,6 @@ def obtain_filter_choices():
 
     filter_choices = {}
     if response.lower().startswith("y"):
-        
         years_taught = pyip.inputMenu(["Any", "Primary", "Secondary", "Combined"], "Which schooling level are you searching for\n",)
         gender = pyip.inputMenu(["Any", "Boys", "Girls", "Co-ed"], "Which student gender school are you looking for?\n",)
         type = pyip.inputMenu(["Any", "Public", "Private"], "Do you prefer a public or private school?\n",)
@@ -27,13 +26,16 @@ def obtain_filter_choices():
         if osch == "yes":
             filter_choices["osch"] = True
 
-    if not filter_choices:
-        pyip.inputYesNo("You have not selected any filters. Would you like to continue?")
-        
-
-    
+        if not filter_choices:
+            response = pyip.inputYesNo("You have not selected any filters. Would you like to re-select filters?")
+            if response.lower().startswith("n"):
+                return filter_choices
+            return obtain_filter_choices()
     return filter_choices
 
+def obtain_filtered_schools(filter_choices, schools_data):
+    pass
 
 
+    
     

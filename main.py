@@ -1,5 +1,5 @@
 from load_school_data import load_school_data
-from obtain_filter_choices import obtain_filter_choices
+from filters import obtain_filter_choices, obtain_filtered_schools
 import sys
 
 print("***Welcome to My School Selector. This app lists all the schools in your desired area!***\n")
@@ -11,7 +11,7 @@ def main():
         sys.exit(1)
         
     filter_choices = obtain_filter_choices()
-    print(filter_choices)
+    obtain_filtered_schools(filter_choices, schools_data)
     
 
 

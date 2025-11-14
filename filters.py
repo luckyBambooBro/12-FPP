@@ -64,7 +64,11 @@ def obtain_filter_choices():
         return answers
     return {}
 
-
+def handle_umbrella_terms(filter_choices):
+    if "years_taught" in filter_choices:
+        if "primary" in filter_choices["years_taught"] or "secondary" in filter_choices["years_taught"]:
+            filter_choices["years_taught"].append("combined")
+    return filter_choices
 
 
 def obtain_filtered_schools(filter_choices, schools_data):
@@ -73,6 +77,8 @@ def obtain_filtered_schools(filter_choices, schools_data):
         return schools_data
 
     filter_choices = {k: v for k, v in filter_choices.items() if "Any" not in v}
+    handle_umbrella_terms(filter_choices)
+
     pprint.pprint(filter_choices) #TODO remove
 
     try:

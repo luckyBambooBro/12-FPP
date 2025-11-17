@@ -4,8 +4,9 @@ gender_enum,
 years_taught_enum,
 type_enum,
 boolean_enum)
+from .config import schools_data_SRC
 
-schools_data_SRC = "schools.json"
+
 
 def load_school_data():
     try:

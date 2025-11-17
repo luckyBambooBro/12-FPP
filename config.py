@@ -1,1 +1,3 @@
-schools_data_SRC = "schools.json"
+SCHOOLS_DATA_SRC = "schools.json"
+NOMINATIM_DELAY = 1.1
+NOMINATIM_TIMEOUT = 10

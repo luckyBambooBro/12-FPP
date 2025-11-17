@@ -4,21 +4,21 @@ gender_enum,
 years_taught_enum,
 type_enum,
 boolean_enum)
-from .config import schools_data_SRC
+from config import SCHOOLS_DATA_SRC
 
 
 
-def load_school_data():
+def load_schools_data():
     try:
-        with open(schools_data_SRC, "r") as f:
+        with open(SCHOOLS_DATA_SRC, "r") as f:
             schools_data = json.load(f)
             check_schools_data(schools_data)
             return schools_data
     except FileNotFoundError:
-        print(f'ERROR: File not found: "{schools_data_SRC}". Check the file path')
+        print(f'ERROR: File not found: "{SCHOOLS_DATA_SRC}". Check the file path')
         return [] #gemini: prevents crashing if this function fails and returns None
     except json.JSONDecodeError:
-        print(f'ERROR: Invalid JSON format in "{schools_data_SRC}" Check for syntax errors') #gemini: prevents crashing if this function fails and returns None
+        print(f'ERROR: Invalid JSON format in "{SCHOOLS_DATA_SRC}" Check for syntax errors') #gemini: prevents crashing if this function fails and returns None
         return []
     except ValueError as e:
         print(e)

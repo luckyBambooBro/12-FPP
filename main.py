@@ -1,7 +1,7 @@
 import sys
 from filters import obtain_filter_choices, obtain_filtered_schools
 from load_schools_data import load_schools_data
-from obtain_distance_to_schools import obtain_distance_to_schools
+from sort_schools_data import sort_schools_data
 
 
 print("***Welcome to My School Selector. This app lists all the schools in your desired area!***\n")
@@ -14,7 +14,7 @@ def main():
         
     filter_choices = obtain_filter_choices()
     filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
-    obtain_distance_to_schools(filtered_schools)
+    sort_schools_data(filtered_schools)
     
 
 

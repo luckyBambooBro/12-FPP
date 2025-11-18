@@ -3,3 +3,5 @@ just wouldnt show up in the filtered list. e.g. if christian brothers college wa
 preschool data because we couldnt find it, if the user were to select preschool, then christian brothers
 college wouldnt make the filtered list, even though it does have preschool (and we dont know it). this
 might be ok to leave it like this, but good to keep in mind 
+
+- returning empty lists in load_schools_data.py. better to sys.exit(1)?

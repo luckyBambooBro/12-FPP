@@ -7,7 +7,15 @@ from load_schools_data import load_schools_data
 from config import SCHOOLS_DATA_SRC, NOMINATIM_DELAY, NOMINATIM_TIMEOUT
 
 def load_then_geocode_schools_data():
-    schools_data = load_schools_data()
+    """
+    Loads a list of dictionaries containing school data from global file path
+    for each school dictionary in list, will use Nominatum API to add latitude and longitude 
+    to the dictionary 
+    This function will run the geocoding loop and save progress after each successful request
+    
+    return: updated list of schools
+    """
+    schools_data = load_schools_data(SCHOOLS_DATA_SRC)
     if not schools_data:
         print("Error: Could not load schools data")
         sys.exit(1)
@@ -28,6 +36,7 @@ def load_then_geocode_schools_data():
                 location = geolocator.geocode(school["address"], timeout=NOMINATIM_TIMEOUT)
                 if location:
                     school[latitude], school[longitude] = location.latitude, location.longitude
+                    save_schools_data(schools_data)
                 else:
                     print(f"Unable to determine geolocation for {school[name]}")
                 time.sleep(NOMINATIM_DELAY)
@@ -38,14 +47,22 @@ def load_then_geocode_schools_data():
                 print("Progress saved. Exiting script due to API error.")
                 sys.exit(1)
 
+    print("\n--- Geocoding process finished successfully! ---")
     return schools_data
 
 def pre_geocode_schools():
+    """
+    Main function to run the geocoding script.
+    """
     pre_geocoded_schools_data = load_then_geocode_schools_data()
     pprint.pprint(pre_geocoded_schools_data)
     save_schools_data(pre_geocoded_schools_data)
 
 def save_schools_data(pre_geocoded_schools_data):
+    """
+    Helper function to save the list of dictionaries back to the original JSON file.
+    This overwrites the file with the most current data.
+    """
     try:
         with open(SCHOOLS_DATA_SRC, "w") as f:
             json.dump(pre_geocoded_schools_data, f, indent=4)

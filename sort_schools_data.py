@@ -8,12 +8,13 @@ YES = "Yes"
 NO = "No"
 
 def sort_schools_data(filtered_schools):
-    geolocator = query_address_permission()
+    geolocator = query_address_permission() 
     if geolocator:
         user_address_coordinates = obtain_user_address(geolocator)
         print(user_address_coordinates)
+        return user_address_coordinates
     else:
-        pass
+        return
 
 def obtain_user_address(geolocator):
     location = None
@@ -24,14 +25,18 @@ def obtain_user_address(geolocator):
             #it was waiting for a response. this would go on forever until i command C. needs thorough testing
             location = geolocator.geocode(address, timeout=NOMINATIM_TIMEOUT)
             if location is None:
-                print(f"Invalid address provided. Please try again")
+                print(f"The geocoding service could not find that address. Please check your spelling or use a more specific address")
+                #TODO consider asking permission here again
+                #i tried to do this by running query_address_permission() but the flow doesnt quite work because if they answer
+                #no then it comes back to this loop and it asks for address again
         except Exception as e:
-            print(f"Error verifying address. Please try again")
+            print(f"Network timeout/server error. Please try again")
             time.sleep(1.1)
     address_latitude, address_longitude = location.latitude, location.longitude
     return (address_latitude, address_longitude)
 
 def query_address_permission():
+    #Ask the user if they want to provide their address. returns geolocator if yes
     question = [inquirer.List(
         "query_input_address", 
         message="Would you like to provide an address to show nearby schools in that area?", 

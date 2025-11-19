@@ -5,3 +5,9 @@ college wouldnt make the filtered list, even though it does have preschool (and 
 might be ok to leave it like this, but good to keep in mind 
 
 - returning empty lists in load_schools_data.py. better to sys.exit(1)?
+
+- sort_schools_data.py. theres a line that was failing testing although it seems ok now (even
+though i didnt make any changes to it). needs retesting. its this line:
+ address = input("Please enter your address:\n>") 
+ theres a #TODO to mark it
+ consider the "requests" library that gemini suggested if i can be bothered...

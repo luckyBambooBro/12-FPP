@@ -1,6 +1,7 @@
 import time
 import inquirer
 from geopy.geocoders import Nominatim
+
 from config import NOMINATIM_TIMEOUT
 
 YES = "Yes"
@@ -15,13 +16,17 @@ def sort_schools_data(filtered_schools):
         pass
 
 def obtain_user_address(geolocator):
-    address = input("Please enter your address:\n>")
     location = None
     while not location:
         try:
+            address = input("Please enter your address:\n>") #TODO for some reason when i tested this before
+            #and typed a random string like "aseftegsga" the terminal would sit still and do nothing as if
+            #it was waiting for a response. this would go on forever until i command C. needs thorough testing
             location = geolocator.geocode(address, timeout=NOMINATIM_TIMEOUT)
+            if location is None:
+                print(f"Invalid address provided. Please try again")
         except Exception as e:
-            print(f"Error accessing Nominatim to verify address. Please try again")
+            print(f"Error verifying address. Please try again")
             time.sleep(1.1)
     address_latitude, address_longitude = location.latitude, location.longitude
     return (address_latitude, address_longitude)

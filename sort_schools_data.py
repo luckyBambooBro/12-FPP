@@ -12,7 +12,7 @@ def sort_schools_data(filtered_schools):
     if geolocator:
         user_address_coordinates = obtain_user_address(geolocator)
         print(user_address_coordinates)
-        return user_address_coordinates
+        return user_address_coordinates #can still be None if user changes mind after failed address attempt
     else:
         return
 
@@ -26,9 +26,9 @@ def obtain_user_address(geolocator):
             location = geolocator.geocode(address, timeout=NOMINATIM_TIMEOUT)
             if location is None:
                 print(f"The geocoding service could not find that address. Please check your spelling or use a more specific address")
-                #TODO consider asking permission here again
-                #i tried to do this by running query_address_permission() but the flow doesnt quite work because if they answer
-                #no then it comes back to this loop and it asks for address again
+                continue_permission = query_address_permission
+                if not continue_permission:
+                    return
         except Exception as e:
             print(f"Network timeout/server error. Please try again")
             time.sleep(1.1)

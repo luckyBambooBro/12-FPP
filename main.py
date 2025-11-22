@@ -14,7 +14,7 @@ def main():
         
     filter_choices = obtain_filter_choices()
     filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
-    sort_schools_data(filtered_schools)
+    sort_schools_data(filtered_schools) #returns (latitude,longitude)
     
 """
 consider building the app as a loop function that allows user to start again from the 

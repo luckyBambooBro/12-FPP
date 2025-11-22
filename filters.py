@@ -73,7 +73,7 @@ def obtain_filter_choices():
             )    
         ]
         answers = inquirer.prompt(questions)
-        return answers
+        return answers  
     return {}
 
 def handle_umbrella_terms(filter_choices):

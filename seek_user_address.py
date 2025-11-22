@@ -8,12 +8,12 @@ NO = "No"
 MIN_ADDRESS_LENGTH = 3
 app_name = "My School Finder"
 
-def sort_schools_data(filtered_schools):
-    #returns (latitude, longitude) if user provides address or None
-    geolocator = query_address_permission() #obtains address if user agrees
+def seek_user_address():
+    #returns (latitude, longitude) if user provides address 
+    #returns None if not
+    geolocator = query_address_permission() # if user agrees obtains geolocator from Nominatum in order to obtain address
     if geolocator:
         user_address_coordinates = obtain_user_address(geolocator)
-        print(f"USER COORDINATES: {user_address_coordinates}") #TODO delete this later
         return user_address_coordinates #can still be None if user changes mind after failed address attempt
     else:
         return
@@ -77,5 +77,5 @@ def confirm_retry_or_exit():
 
 #TODO get rid of this if using as a utility script
 if __name__ == "__main__":
-    sort_schools_data([])
+    seek_user_address()
 

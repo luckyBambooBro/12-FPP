@@ -42,8 +42,8 @@ def obtain_user_address(geolocator):
             time.sleep(NOMINATIM_DELAY)
             if not confirm_retry_or_exit():
                 return
-    address_latitude, address_longitude = location.latitude, location.longitude
-    return (address_latitude, address_longitude)
+    user_coordinates = (location.latitude, location.longitude)
+    return user_coordinates
 
 def query_address_permission():
     #Ask the user if they want to provide their address. #

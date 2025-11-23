@@ -10,8 +10,10 @@
         "preschool": false,
         "osch": true,
         "website": "https://fulhmgdnps.sa.edu.au/",
-        "latitude": -34.9101114,
-        "longitude": 138.5043155
+        "school_coordinates": [
+            -34.9101114,
+            138.5043155
+        ]
     },
     {
         "id": 2,
@@ -24,8 +26,10 @@
         "preschool": false,
         "osch": false,
         "website": "https://www.valleyview.sa.edu.au/",
-        "latitude": -34.8344774,
-        "longitude": 138.6689698
+        "school_coordinates": [
+            -34.8344774,
+            138.6689698
+        ]
     },
     {
         "id": 3,
@@ -38,8 +42,10 @@
         "preschool": false,
         "osch": false,
         "website": "https://tcc.sa.edu.au/templechristiancollege-mile-end",
-        "latitude": -34.9233677,
-        "longitude": 138.5720221
+        "school_coordinates": [
+            -34.9233677,
+            138.5720221
+        ]
     },
     {
         "id": 4,
@@ -52,8 +58,10 @@
         "preschool": false,
         "osch": true,
         "website": "https://www.sac.sa.edu.au/",
-        "latitude": -34.9292696,
-        "longitude": 138.6027124
+        "school_coordinates": [
+            -34.9292696,
+            138.6027124
+        ]
     },
     {
         "id": 5,
@@ -66,7 +74,9 @@
         "preschool": false,
         "osch": true,
         "website": "http://www.cbc.sa.edu.au/",
-        "latitude": -34.9278602,
-        "longitude": 138.6094516
+        "school_coordinates": [
+            -34.9278602,
+            138.6094516
+        ]
     }
 ]

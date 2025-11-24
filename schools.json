@@ -78,5 +78,37 @@
             -34.9278602,
             138.6094516
         ]
+    },
+    {
+        "id": 6,
+        "name": "Perth Modern School",
+        "address": "90 Roberts Road, Subiaco WA 6008",
+        "years_taught": "secondary",
+        "gender": "co_ed",
+        "type": "private",
+        "religious": false,
+        "preschool": false,
+        "osch": false,
+        "website": "https://www.perthmodern.wa.edu.au/",
+        "school_coordinates": [
+            -31.9445901,
+            115.838043
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Ballarat Clarendon College",
+        "address": "1425 Sturt St, Newington VIC 3350",
+        "years_taught": "combined",
+        "gender": "co_ed",
+        "type": "private",
+        "religious": true,
+        "preschool": true,
+        "osch": true,
+        "website": "https://www.clarendon.vic.edu.au/",
+        "school_coordinates": [
+            -37.5606107,
+            143.8341907
+        ]
     }
 ]

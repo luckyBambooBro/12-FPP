@@ -22,10 +22,6 @@ def obtain_user_address(geolocator):
     location = None
     while not location:
         address = input("Please enter your address:\n>")
-        #TODO for some reason when i tested this before
-            #and typed a random string like "aseftegsga" the terminal would sit still and do nothing as if
-            #it was waiting for a response. this would go on forever until i command C. needs thorough testing
-        # CRITICAL FIX: Input validation added back
         if not address.strip() or len(address.strip()) < MIN_ADDRESS_LENGTH:
             print("Please enter a valid address.")
             continue
@@ -72,9 +68,9 @@ def confirm_retry_or_exit():
     )
     ]
     answer = inquirer.prompt(question)
+    print(answer)
     return answer and answer.get("query continue") == YES
 
-#TODO get rid of this if using as a utility script
 if __name__ == "__main__":
     seek_user_address()
 

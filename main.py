@@ -19,10 +19,11 @@ def main():
     user_address = seek_user_address() #returns (latitude,longitude)
     if not user_address:
         print(f"FILTERED SCHOOLS = {filtered_schools}") #TODO delete later
+        return filtered_schools
     else:
         sorted_schools_list = sort_schools_data(filtered_schools, user_address)
-    display_sorted_schools_list(sorted_schools_list)
-    return sorted_schools_list
+        display_sorted_schools_list(sorted_schools_list)
+        return sorted_schools_list
     
 
 """

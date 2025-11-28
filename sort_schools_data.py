@@ -1,9 +1,6 @@
 from geopy.distance import geodesic
 import pprint
-
-SCHOOL_COORDINATES = "school_coordinates"
-DISTANCE_TO_USER = "distance_to_user_km"
-NAME = "name"
+from config import DISTANCE_TO_USER, NAME, SCHOOL_COORDINATES
 
 def sort_schools_data(filtered_schools, user_address):
     """
@@ -23,7 +20,9 @@ def sort_schools_data(filtered_schools, user_address):
 def calculate_distance_user_to_schools(filtered_schools, user_address):
     for school in filtered_schools:
         try:
-            distance = geodesic(school[SCHOOL_COORDINATES], user_address).km
+            distance = round(
+                geodesic(school[SCHOOL_COORDINATES], user_address).km,
+                2)
         except KeyError as k_Error:
             print(f"Unable to determine distance from {school[NAME]}\n{k_Error}")
         except Exception as e:

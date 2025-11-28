@@ -4,6 +4,7 @@ from load_schools_data import load_schools_data
 from seek_user_address import seek_user_address
 from sort_schools_data import sort_schools_data
 from config import SCHOOLS_DATA_SRC
+from display_sorted_schools_list import display_sorted_schools_list
 
 print("***Welcome to My School Selector. This app lists all the schools in your desired area!***\n")
 
@@ -17,11 +18,13 @@ def main():
     filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
     user_address = seek_user_address() #returns (latitude,longitude)
     if not user_address:
-        print(f"FILTERED SCHOOLD = {filtered_schools}") #TODO delete later
-        return filtered_schools
+        print(f"FILTERED SCHOOLS = {filtered_schools}") #TODO delete later
     else:
-        filtered_sorted_schools_list = sort_schools_data(filtered_schools, user_address)
-        
+        sorted_schools_list = sort_schools_data(filtered_schools, user_address)
+    display_sorted_schools_list(sorted_schools_list)
+    return sorted_schools_list
+    
+
 """
 consider building the app as a loop function that allows user to start again from the 
 beginning, intead of the app just shutting down

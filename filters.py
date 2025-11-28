@@ -3,9 +3,7 @@ import pprint
 import inquirer
 from inquirer import errors as inquirer_errors # CRITICAL: Keeping this explicit import as it is required to access the ValidationError class.
 
-ANY = "Any" 
-YES = "Yes"
-NO = "No"
+from config import ANY, NO, YES
 
 def obtain_filter_choices():
     

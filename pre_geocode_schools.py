@@ -4,12 +4,10 @@ import pprint
 import sys
 from geopy.geocoders import Nominatim
 from load_schools_data import load_schools_data
-from config import SCHOOLS_DATA_SRC, NOMINATIM_DELAY, NOMINATIM_TIMEOUT
+from config import (
+    NOMINATIM_DELAY, NOMINATIM_TIMEOUT, SCHOOL_COORDINATES, SCHOOLS_DATA_SRC,
+    APP_NAME, NAME_KEY)
 
-
-COORDINATE_KEY = "school_coordinates"
-NAME_KEY = "name"
-APP_NAME = "My School Finder"
 
 
 def load_then_geocode_schools_data():
@@ -31,16 +29,16 @@ def load_then_geocode_schools_data():
     name = NAME_KEY
 
     total_schools = len(schools_data)
-    geocoded_count = sum(1 for school in schools_data if COORDINATE_KEY in school)
+    geocoded_count = sum(1 for school in schools_data if SCHOOL_COORDINATES in school)
     print(f"Starting geocoding process for {total_schools} schools")
     print(f"{geocoded_count}/{total_schools} schools already have coordinates. Resuming pre-geocoding...")
 
     for i, school in enumerate(schools_data):     
-        if COORDINATE_KEY not in school.keys(): 
+        if SCHOOL_COORDINATES not in school.keys(): 
             try:   
                 location = geolocator.geocode(school["address"], timeout=NOMINATIM_TIMEOUT)
                 if location:
-                    school[COORDINATE_KEY] = (location.latitude, location.longitude)
+                    school[SCHOOL_COORDINATES] = (location.latitude, location.longitude)
                     save_schools_data(schools_data)
                 else:
                     print(f"Unable to determine geolocation for {school[name]}")

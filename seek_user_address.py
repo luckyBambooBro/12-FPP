@@ -1,12 +1,11 @@
 import time
 import inquirer
 from geopy.geocoders import Nominatim
-from config import NOMINATIM_DELAY, NOMINATIM_TIMEOUT
+from config import (
+    APP_NAME, NOMINATIM_DELAY, NOMINATIM_TIMEOUT,
+    NO, YES)                
 
-YES = "Yes"
-NO = "No"
 MIN_ADDRESS_LENGTH = 3
-app_name = "My School Finder"
 
 def seek_user_address():
     #returns (latitude, longitude) if user provides address 
@@ -59,7 +58,7 @@ def query_address_permission():
     answer = inquirer.prompt(question)
 
     if YES in answer["query_input_address"]:
-        geolocator = Nominatim(user_agent=app_name, timeout=NOMINATIM_TIMEOUT)
+        geolocator = Nominatim(user_agent=APP_NAME, timeout=NOMINATIM_TIMEOUT)
         return geolocator
     elif NO in answer["query_input_address"]:
         return

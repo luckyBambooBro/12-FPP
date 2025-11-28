@@ -21,7 +21,7 @@ def main():
         return filtered_schools
     else:
         filtered_sorted_schools_list = sort_schools_data(filtered_schools, user_address)
-    
+        
 """
 consider building the app as a loop function that allows user to start again from the 
 beginning, intead of the app just shutting down

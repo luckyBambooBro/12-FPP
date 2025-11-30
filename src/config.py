@@ -3,6 +3,7 @@ SCHOOLS_DATA_SRC = "./src/schools.json"
 
 #DICTIONARY KEYS
 #FOR SCHOOL DICTIONARY:
+ADDRESS = "address"
 DISTANCE_TO_USER = "distance_to_user_km"
 NAME = "name"
 SCHOOL_COORDINATES = "school_coordinates"

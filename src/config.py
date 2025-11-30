@@ -1,4 +1,4 @@
-SCHOOLS_DATA_SRC = "schools.json"
+SCHOOLS_DATA_SRC = "./src/schools.json"
 
 
 #DICTIONARY KEYS

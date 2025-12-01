@@ -1,14 +1,19 @@
 import streamlit as st
+from config import (
+    GENDER_OPTIONS, 
+    OSCH,
+    PRE_SCHOOL,
+    RELIGIOUS_SCHOOL,
+    SCHOOL_TYPE_OPTIONS, 
+    YEARS_LEVELS_OPTIONS
+)
 
-YEARS_LEVELS_OPTIONS = ["All", "Primary", "Secondary", "Combined"]
-SCHOOL_TYPE_OPTIONS = ["All", "Public", "Private"]
-GENDER_OPTIONS = ["All", "Co-education", "Boys", "Girls"]
-
+"""
+Presents the filter options to the user in the sidebar. Once user clicks on "Search", all the 
+selected filters are return as a dictionary
+"""
 
 def sidebar_filter_and_search():
-
-    
-
     with st.sidebar:
         st.header("Filter & Search")
 
@@ -39,9 +44,9 @@ def sidebar_filter_and_search():
             st.markdown("---")
             st.subheader("Additional Facilities and Programs:")
 
-            option_religious = st.checkbox("Religious School")
-            option_osch = st.checkbox("Out of School Hours Care (OSHC)")
-            option_pre_school = st.checkbox("Pre-School")
+            option_religious = st.checkbox(RELIGIOUS_SCHOOL)
+            option_osch = st.checkbox(OSCH)
+            option_pre_school = st.checkbox(PRE_SCHOOL)
             
             st.markdown("---")
             search_button = st.form_submit_button("Run Search and Filter")
@@ -61,4 +66,4 @@ def sidebar_filter_and_search():
             "address": user_address_input
         }
         st.success(f"Processing search for schools near you...")
-        return search_button
+        return filter_choices, search_button

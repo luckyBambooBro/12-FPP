@@ -1,6 +1,6 @@
 import streamlit as st
 from sidebar_filter_and_search import sidebar_filter_and_search
-from st_src.filters import obtain_filtered_schools
+from src.filters import obtain_filtered_schools
 
 # ---PAGE SETUP ---
 st.set_page_config(page_title="School Selector GUI", layout="wide")

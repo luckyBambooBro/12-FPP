@@ -1,5 +1,5 @@
 import streamlit as st
-from config import (
+from src.config import (
     GENDER_OPTIONS, 
     OSCH,
     PRE_SCHOOL,

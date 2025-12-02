@@ -1,7 +1,6 @@
 import sys
 import pprint
-from st_src.config import ALL, NO, YES
-from config import YEAR_LEVELS_OPTIONS
+from .config import ALL, YEAR_LEVELS_OPTIONS
 
 PRIMARY = "primary"
 SECONDARY = "secondary"

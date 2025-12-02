@@ -1,4 +1,4 @@
-SCHOOLS_DATA_SRC = "./src/schools.json"
+SCHOOLS_DATA_SRC = "./py_src/schools.json"
 
 
 #DICTIONARY KEYS

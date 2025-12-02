@@ -5,12 +5,12 @@ from config import (
     PRE_SCHOOL,
     RELIGIOUS_SCHOOL,
     SCHOOL_TYPE_OPTIONS, 
-    YEARS_LEVELS_OPTIONS
+    YEAR_LEVELS_OPTIONS
 )
 
 """
 Presents the filter options to the user in the sidebar. Once user clicks on "Search", all the 
-selected filters are return as a dictionary
+selected filters (and address if supplied) are return as a dictionary
 """
 
 def sidebar_filter_and_search():
@@ -23,18 +23,18 @@ def sidebar_filter_and_search():
             st.subheader("Core Criteria")
         
 
-            year_levels = st.selectbox(
+            selectbox_year_levels = st.selectbox(
                 "Select Year Level", 
-                options = YEARS_LEVELS_OPTIONS, 
-                index=YEARS_LEVELS_OPTIONS.index("All"))
+                options = YEAR_LEVELS_OPTIONS, 
+                index=YEAR_LEVELS_OPTIONS.index("All"))
 
-            school_type = st.selectbox(
+            selectbox_school_type = st.selectbox(
                 "Select School Type:", 
                 options=SCHOOL_TYPE_OPTIONS,
                 index=SCHOOL_TYPE_OPTIONS.index("All") 
             )
 
-            gender_type = st.selectbox(
+            selectbox_gender_type = st.selectbox(
                 "Select Gender:", 
                 options=GENDER_OPTIONS,
                 index=GENDER_OPTIONS.index("All") 
@@ -44,9 +44,9 @@ def sidebar_filter_and_search():
             st.markdown("---")
             st.subheader("Additional Facilities and Programs:")
 
-            option_religious = st.checkbox(RELIGIOUS_SCHOOL)
-            option_osch = st.checkbox(OSCH)
-            option_pre_school = st.checkbox(PRE_SCHOOL)
+            checkbox_religious = st.checkbox(RELIGIOUS_SCHOOL)
+            checkbox_oshc = st.checkbox(OSCH)
+            checkbox_pre_school = st.checkbox(PRE_SCHOOL)
             
             st.markdown("---")
             search_button = st.form_submit_button("Run Search and Filter")
@@ -54,16 +54,16 @@ def sidebar_filter_and_search():
     # --- MAIN EXECUTION BLOCK ---
     # This block only runs the logic if the form was submitted.
 
-    if search_button:
-        # 1. Collect all inputs (The variables above hold the final state)
-        filter_choices = {
-            "year_levels": year_levels,
-            "school_type": school_type,
-            "gender_type": gender_type,
-            "is_religious": option_religious,
-            "has_oshc": option_osch,
-            "has_preschool": option_pre_school,
-            "address": user_address_input
-        }
-        st.success(f"Processing search for schools near you...")
-        return filter_choices, search_button
+
+    # 1. Collect all inputs (The variables above hold the final state)
+    filter_choices = {
+        "year_levels": selectbox_year_levels,
+        "school_type": selectbox_school_type,
+        "gender_type": selectbox_gender_type,
+        "is_religious": checkbox_religious,
+        "has_oshc": checkbox_oshc,
+        "has_preschool": checkbox_pre_school,
+        "address": user_address_input
+    }
+    st.success(f"Processing search for schools near you...")
+    return filter_choices, search_button

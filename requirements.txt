@@ -1,4 +1,4 @@
 geopy
 inquirer
 pyinputplus
-
+streamlit

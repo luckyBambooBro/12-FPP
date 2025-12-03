@@ -1,5 +1,5 @@
 import streamlit as st
-from sidebar_filter_and_search import sidebar_filter_and_search
+from src.sidebar_filter_and_search import sidebar_filter_and_search
 from src.filters import obtain_filtered_schools
 
 # ---PAGE SETUP ---
@@ -8,5 +8,5 @@ st.title("🏫 School Locator Dashboard")
 
 filter_choices, search_button = sidebar_filter_and_search()
 
-# if search_button:
-#     obtain_filtered_schools()
+
+filtered_schools = obtain_filtered_schools(filter_choices, None)

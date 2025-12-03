@@ -53,9 +53,9 @@ def sidebar_filter_and_search():
             
             #Guard against empty filters
             if not year_levels:
-                year_levels = [ALL]
+                year_levels = SELECT_YEAR_LEVELS
             if not gender:
-                gender = [ALL]
+                gender = SELECT_GENDER
             
             #create dictionary of filters
             filter_choices = {

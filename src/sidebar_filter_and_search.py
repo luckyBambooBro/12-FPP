@@ -7,6 +7,7 @@ SELECT_RELIGIOUS_SCHOOL = "Religious School"
 SELECT_OSCH = "Out of School Hours Care (OSHC)"
 SELECT_PRE_SCHOOL = "Pre-School"
 
+ALL = "All"
 primary = "Primary"
 secondary = "Secondary"
 combined = "Combined"
@@ -32,12 +33,12 @@ def sidebar_filter_and_search():
             )
             year_levels = st.multiselect(
                 "Select Year Level(s)",
-                options=SELECT_YEAR_LEVELS,
+                options=SELECT_YEAR_LEVELS
             )
 
             gender = st.multiselect(
                 "Select Gender",
-                options=SELECT_GENDER,
+                options=SELECT_GENDER
             )
 
             religious = st.checkbox(SELECT_RELIGIOUS_SCHOOL)
@@ -49,6 +50,14 @@ def sidebar_filter_and_search():
             search_button = st.form_submit_button("Filter & Search")
             if search_button:
                 st.success(f"Processing search for schools near you...")
+            
+            #Guard against empty filters
+            if not year_levels:
+                year_levels = [ALL]
+            if not gender:
+                gender = [ALL]
+            
+            #create dictionary of filters
             filter_choices = {
                 "school_type": [school_type],#string
                 "year levels": year_levels,#list

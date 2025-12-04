@@ -3,10 +3,11 @@ def obtain_filtered_schools(filter_choices, schools_data):
         print("No filters applied. Returning all schools")
         return schools_data
 
-    #removes anyh filters that contain "All" since theyre redundant
+    #removes any filters that contain "All" or False since theyre redundant 
+
     filter_choices = {k: v for k, v in filter_choices.items() if "All" not in v}
+    filter_choices = {k: v for k, v in filter_choices.items() if False not in v}
     return filter_choices
-    #TODO UP TO HERE: the above is incorrect, i need to fix it
     # try:
     #     current_list = schools_data
     #     for k, v in filter_choices.items():

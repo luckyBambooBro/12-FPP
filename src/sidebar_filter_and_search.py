@@ -7,10 +7,6 @@ SELECT_RELIGIOUS_SCHOOL = "Religious School"
 SELECT_OSCH = "Out of School Hours Care (OSHC)"
 SELECT_PRE_SCHOOL = "Pre-School"
 
-ALL = "All"
-primary = "Primary"
-secondary = "Secondary"
-combined = "Combined"
 
 """
 Presents the filter options to the user in the sidebar. Once user clicks on "Search", all the 
@@ -22,6 +18,7 @@ def sidebar_filter_and_search():
         st.header("Filter & Search")
 
         user_address_input = st.text_input("Enter Your Home Address:")
+        
 
         with st.form(key="filter_form"):
             st.subheader("Core Criteria")

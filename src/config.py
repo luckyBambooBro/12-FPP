@@ -1,15 +1,5 @@
-
-#filter options to present to user to filter through list of schools
-
-
-#DICTIONARY KEYS
-#FOR SCHOOL DICTIONARY:
-
-YEAR_LEVELS = "year levels"
-
-
-#FILTER CHOICE VARIABLES
-ALL = "All" 
+#File path for schools data
+SCHOOLS_DATA_SRC = "data/schools.json"
 
 #NOMINATUM variables (geolocator)
 APP_NAME = "My School Finder"

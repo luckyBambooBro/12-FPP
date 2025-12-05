@@ -1,0 +1,114 @@
+[
+    {
+        "id": 1,
+        "name": "Fulham Gardens Primary School",
+        "address": "5 Mitton Ave Henley Beach SA 5022",
+        "years_taught": "primary",
+        "gender": "co_ed",
+        "type": "public",
+        "religious": false,
+        "preschool": false,
+        "osch": true,
+        "website": "https://fulhmgdnps.sa.edu.au/",
+        "school_coordinates": [
+            -34.9101114,
+            138.5043155
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Valley View Secondary School",
+        "address": "240 Wright Rd Para Vista SA 5093",
+        "years_taught": "secondary",
+        "gender": "co_ed",
+        "type": "public",
+        "religious": false,
+        "preschool": false,
+        "osch": false,
+        "website": "https://www.valleyview.sa.edu.au/",
+        "school_coordinates": [
+            -34.8344774,
+            138.6689698
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Temple Christian College - Mile End",
+        "address": "96 Henley Beach Rd, Mile End SA 5031",
+        "years_taught": "secondary",
+        "gender": "co_ed",
+        "type": "private",
+        "religious": true,
+        "preschool": false,
+        "osch": false,
+        "website": "https://tcc.sa.edu.au/templechristiancollege-mile-end",
+        "school_coordinates": [
+            -34.9233677,
+            138.5720221
+        ]
+    },
+    {
+        "id": 4,
+        "name": "St Aloysius College",
+        "address": "53 Wakefield St, Adelaide SA 5000",
+        "years_taught": "combined",
+        "gender": "girls",
+        "type": "private",
+        "religious": true,
+        "preschool": false,
+        "osch": true,
+        "website": "https://www.sac.sa.edu.au/",
+        "school_coordinates": [
+            -34.9292696,
+            138.6027124
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Christian Brothers College",
+        "address": "214 Wakefield St, Adelaide SA 5000",
+        "years_taught": "combined",
+        "gender": "boys",
+        "type": "private",
+        "religious": true,
+        "preschool": false,
+        "osch": true,
+        "website": "http://www.cbc.sa.edu.au/",
+        "school_coordinates": [
+            -34.9278602,
+            138.6094516
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Perth Modern School",
+        "address": "90 Roberts Road, Subiaco WA 6008",
+        "years_taught": "secondary",
+        "gender": "co_ed",
+        "type": "private",
+        "religious": false,
+        "preschool": false,
+        "osch": false,
+        "website": "https://www.perthmodern.wa.edu.au/",
+        "school_coordinates": [
+            -31.9445901,
+            115.838043
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Ballarat Clarendon College",
+        "address": "1425 Sturt St, Newington VIC 3350",
+        "years_taught": "combined",
+        "gender": "co_ed",
+        "type": "private",
+        "religious": true,
+        "preschool": true,
+        "osch": true,
+        "website": "https://www.clarendon.vic.edu.au/",
+        "school_coordinates": [
+            -37.5606107,
+            143.8341907
+        ]
+    }
+]

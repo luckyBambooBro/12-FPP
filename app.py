@@ -52,7 +52,7 @@ def load_schools_data_cached(): #this function must stay in app.py due to the st
 # FUNCTIONS
 # =========================================================
 
-def throttled_autocomplete(address, geolocator):
+def throttled_address_search(address, geolocator):
     """
     initially designed as gemini said the script reruns on interaction, but i think st.input() might 
     only rerun on "enter". useful to keep this anyway as it throttles the responses sent off to Nominatim 
@@ -87,7 +87,7 @@ selected filters (and address if supplied) are return as a dictionary
         st.header("Filter & Search")
 
         address = st.text_input("Please enter your address:")
-        user_location_data = throttled_autocomplete(address, geolocator)
+        user_location_data = throttled_address_search(address, geolocator)
 
         #"address" will keep returning None, until it returns a valid geolocator address. Then the 
         # following checks run

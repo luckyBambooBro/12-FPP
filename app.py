@@ -4,19 +4,24 @@ import streamlit as st
 from src.filters import obtain_filtered_schools
 from src.load_schools_data import load_schools_data
 from src.config import (
-    APP_NAME, NOMINATIM_TIMEOUT,
+    APP_NAME, NOMINATIM_DELAY, NOMINATIM_TIMEOUT,
     SCHOOLS_DATA_SRC
 )
-
-#============= Cached Variables/Variables=============
+#================= GLOBAL VARIABLES =======================
+LAST_GEOCODED_TIME = "last geocoding time"
+LAST_SUCCESSFUL_LOCATION = "last successful location"
+# =========================================================
+# CACHED RESOURCES & DATA
+# =========================================================
 @st.cache_resource
 def initialise_geolocator():
     return Nominatim(user_agent=APP_NAME, timeout=NOMINATIM_TIMEOUT)
 
 @st.cache_data
-def user_address_input_autocomplete(address):
-    geolocator = initialise_geolocator()
-    return  geolocator.geocode(address, timeout = NOMINATIM_TIMEOUT)
+def obtain_geolocation_from_address(address, geolocator):
+    if not address:
+        return None
+    return geolocator.geocode(address, timeout = NOMINATIM_TIMEOUT)
 
 @st.cache_data(show_spinner=False)
 def load_schools_data_cached(): #this function must stay in app.py due to the streamlit import
@@ -30,13 +35,34 @@ def load_schools_data_cached(): #this function must stay in app.py due to the st
         time.sleep(5) #TODO delete this. its only to show me the spinner is working while loading
         return schools_data
 
-#================ FUNCTIONS ================
+# =========================================================
+# FUNCTIONS
+# =========================================================
 
-def sidebar_filter_and_search():
+def throttled_autocomplete(address, geolocator):
+    if not address:
+        return
+    current_time = time.time()
+    time_since_last_call = current_time - st.session_state[LAST_GEOCODED_TIME]
+
+    if time_since_last_call <= NOMINATIM_DELAY:
+        return st.session_state.get[LAST_SUCCESSFUL_LOCATION]
+    
+    st.session_state[LAST_GEOCODED_TIME] = current_time
+    
+    with st.spinner(f"Searching for {address}..."):
+        location = obtain_geolocation_from_address(address, geolocator)
+        st.session_state[LAST_SUCCESSFUL_LOCATION] = location
+        return location
+
+def sidebar_filter_and_search(geolocator):
     """
 Presents the filter options to the user in the sidebar. Once user clicks on "Search", all the 
 selected filters (and address if supplied) are return as a dictionary
 """
+    filter_choices = {}
+    search_button = False
+
     SELECT_YEAR_LEVELS = ["All", "Primary", "Secondary", "Combined"]
     SELECT_SCHOOL_TYPE = ["All", "Public", "Private"]
     SELECT_GENDER = ["All", "Co-education", "Boys", "Girls"]
@@ -47,13 +73,16 @@ selected filters (and address if supplied) are return as a dictionary
     with st.sidebar:
         st.header("Filter & Search")
 
-
         address = st.text_input("Please enter your address:")
-        #TODO BUILD DEBOUNCING FUNC HERE WITH ST.SESSION_STATE AND DONT FORGET TO ADD IN 
-        #NOMINATIM TIME DELAY
-        if address:
-            address = user_address_input_autocomplete(address)
+        user_location_data = throttled_autocomplete(address, geolocator)
         print(f"ADDRESS  = {address}")
+
+        #"address" will keep returning None, until it returns a valid geolocator address. Then the 
+        # following checks run
+        if user_location_data:
+            st.info(f"📍 Address found: {user_location_data.address}")
+        elif address and time.time() - st.session[LAST_GEOCODED_TIME] <= NOMINATIM_DELAY:
+            st.caption("🔍 Searching")
 
 
         with st.form(key="filter_form"):
@@ -104,17 +133,20 @@ selected filters (and address if supplied) are return as a dictionary
                
 #===========================================
 
-
 #============= SCRIPT EXECUTION ============
+
+#--- Initialise Session State for Throttling ---
+if LAST_GEOCODED_TIME not in st.session_state:
+    st.session_state[LAST_GEOCODED_TIME] = 0
 
 # ---PAGE SETUP ---
 st.set_page_config(page_title="School Selector GUI", layout="wide")
 st.title("🏫 School Locator Dashboard")
 schools_data = load_schools_data_cached()
+geolocator = initialise_geolocator()
 
 
-
-filter_choices, search_button = sidebar_filter_and_search()
+filter_choices, search_button = sidebar_filter_and_search(geolocator)
 
 
 filtered_schools = obtain_filtered_schools(filter_choices, None)

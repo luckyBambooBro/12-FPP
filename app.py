@@ -1,11 +1,19 @@
 import json, sys, time
 from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 import streamlit as st
 from src.filters import obtain_filtered_schools
 from src.load_schools_data import load_schools_data
 from src.config import (
     APP_NAME, NOMINATIM_DELAY, NOMINATIM_TIMEOUT,
-    SCHOOLS_DATA_SRC
+    SCHOOLS_DATA_SRC,
+
+    SELECT_YEAR_LEVELS,
+    SELECT_SCHOOL_TYPE,
+    SELECT_GENDER,
+    SELECT_RELIGIOUS_SCHOOL ,
+    SELECT_OSCH ,
+    SELECT_PRE_SCHOOL
 )
 #================= GLOBAL VARIABLES =======================
 LAST_GEOCODED_TIME = "last geocoding time"
@@ -17,12 +25,17 @@ LAST_SUCCESSFUL_LOCATION = "last successful location"
 def initialise_geolocator():
     return Nominatim(user_agent=APP_NAME, timeout=NOMINATIM_TIMEOUT)
 
-@st.cache_data
-def obtain_geolocation_from_address(address, geolocator):
+@st.cache_data(show_spinner=False)
+def obtain_geolocation_from_address(address, _geolocator):
     if not address:
         return None
-    return geolocator.geocode(address, timeout = NOMINATIM_TIMEOUT)
-
+    try:
+        return geolocator.geocode(address, timeout = NOMINATIM_TIMEOUT)
+    except (GeocoderTimedOut, GeocoderServiceError) as e:
+        print(f'Geolocation Error for "{address}": {e}')
+    except Exception as e:
+        print(e)
+    
 @st.cache_data(show_spinner=False)
 def load_schools_data_cached(): #this function must stay in app.py due to the streamlit import
     """
@@ -40,18 +53,23 @@ def load_schools_data_cached(): #this function must stay in app.py due to the st
 # =========================================================
 
 def throttled_autocomplete(address, geolocator):
+    """
+    initially designed as gemini said the script reruns on interaction, but i think st.input() might 
+    only rerun on "enter". useful to keep this anyway as it throttles the responses sent off to Nominatim 
+    which is useful to due Nominatims restriction on the free tier of its API
+    """
     if not address:
         return
     current_time = time.time()
     time_since_last_call = current_time - st.session_state[LAST_GEOCODED_TIME]
 
     if time_since_last_call <= NOMINATIM_DELAY:
-        return st.session_state.get[LAST_SUCCESSFUL_LOCATION]
+        return st.session_state.get(LAST_SUCCESSFUL_LOCATION)
     
     st.session_state[LAST_GEOCODED_TIME] = current_time
     
     with st.spinner(f"Searching for {address}..."):
-        location = obtain_geolocation_from_address(address, geolocator)
+        location =  obtain_geolocation_from_address(address, geolocator)
         st.session_state[LAST_SUCCESSFUL_LOCATION] = location
         return location
 
@@ -63,26 +81,20 @@ selected filters (and address if supplied) are return as a dictionary
     filter_choices = {}
     search_button = False
 
-    SELECT_YEAR_LEVELS = ["All", "Primary", "Secondary", "Combined"]
-    SELECT_SCHOOL_TYPE = ["All", "Public", "Private"]
-    SELECT_GENDER = ["All", "Co-education", "Boys", "Girls"]
-    SELECT_RELIGIOUS_SCHOOL = "Religious School"
-    SELECT_OSCH = "Out of School Hours Care (OSHC)"
-    SELECT_PRE_SCHOOL = "Pre-School"
+
 
     with st.sidebar:
         st.header("Filter & Search")
 
         address = st.text_input("Please enter your address:")
         user_location_data = throttled_autocomplete(address, geolocator)
-        print(f"ADDRESS  = {address}")
 
         #"address" will keep returning None, until it returns a valid geolocator address. Then the 
         # following checks run
         if user_location_data:
             st.info(f"📍 Address found: {user_location_data.address}")
-        elif address and time.time() - st.session[LAST_GEOCODED_TIME] <= NOMINATIM_DELAY:
-            st.caption("🔍 Searching")
+        elif address and time.time() - st.session_state[LAST_GEOCODED_TIME] <= NOMINATIM_DELAY:
+            st.caption("🔍 Searching for valid address...")
 
 
         with st.form(key="filter_form"):
@@ -138,6 +150,8 @@ selected filters (and address if supplied) are return as a dictionary
 #--- Initialise Session State for Throttling ---
 if LAST_GEOCODED_TIME not in st.session_state:
     st.session_state[LAST_GEOCODED_TIME] = 0
+if LAST_SUCCESSFUL_LOCATION not in st.session_state:
+    st.session_state[LAST_SUCCESSFUL_LOCATION] = None
 
 # ---PAGE SETUP ---
 st.set_page_config(page_title="School Selector GUI", layout="wide")
@@ -149,5 +163,5 @@ geolocator = initialise_geolocator()
 filter_choices, search_button = sidebar_filter_and_search(geolocator)
 
 
-filtered_schools = obtain_filtered_schools(filter_choices, None)
+filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
 

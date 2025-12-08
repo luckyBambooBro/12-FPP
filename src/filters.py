@@ -5,7 +5,6 @@ def convert_values_to_match_json_file(filter_choices):
     for k, v in filter_choices.items():
         filter_choices[k] = [item.lower().replace("co-education", "co_ed") if isinstance(item, str) else item 
                              for item in v]
-    print(f"CONVERTED FILTER CHOICES = {filter_choices}")
     return filter_choices
 
 def obtain_filtered_schools(filter_choices, schools_data):

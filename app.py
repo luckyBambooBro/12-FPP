@@ -45,7 +45,7 @@ def load_schools_data_cached(): #this function must stay in app.py due to the st
     """
     with st.spinner("Loading school data..."):
         schools_data = load_schools_data(SCHOOLS_DATA_SRC)
-        time.sleep(5) #TODO delete this. its only to show me the spinner is working while loading
+        time.sleep(3) #TODO delete this. its only to show me the spinner is working while loading
         return schools_data
 
 # =========================================================
@@ -127,9 +127,9 @@ selected filters (and address if supplied) are return as a dictionary
             
             #Guard against empty filters
             if not year_levels:
-                year_levels = SELECT_YEAR_LEVELS
+                year_levels = SELECT_YEAR_LEVELS #"All" will be stripped later but its easier to include it for now 
             if not gender:
-                gender = SELECT_GENDER
+                gender = SELECT_GENDER #"All" will be stripped later but its easier to include it for now
             
             #create dictionary of filters
             filter_choices = {
@@ -164,4 +164,5 @@ filter_choices, search_button = sidebar_filter_and_search(geolocator)
 
 
 filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
+
 

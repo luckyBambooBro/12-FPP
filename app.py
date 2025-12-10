@@ -115,13 +115,14 @@ selected filters (and address if supplied) are return as a dictionary
             gender = SELECT_GENDER #"All" will be stripped later but its easier to include it for now
         
         #create dictionary of filters
+        #keys must match data/schools.json keys
         filter_choices = {
-            "school_type": [school_type],#string
+            "school type": [school_type],#string
             "year levels": year_levels,#list
             "gender": gender,#list
             "religious": [religious], #boolean
             "oshc": [oshc], #boolean
-            "pre_school": [pre_school] #boolean
+            "preschool": [pre_school] #boolean
         }
 
     return filter_choices, search_button

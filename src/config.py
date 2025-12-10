@@ -13,3 +13,4 @@ SELECT_GENDER = ["All", "Co-education", "Boys", "Girls"]
 SELECT_RELIGIOUS_SCHOOL = "Religious School"
 SELECT_OSCH = "Out of School Hours Care (OSHC)"
 SELECT_PRE_SCHOOL = "Pre-School"
+SELECT_RADIUS = [5, 10, 15, 25, 50, None]

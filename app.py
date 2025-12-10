@@ -13,7 +13,8 @@ from src.config import (
     SELECT_GENDER,
     SELECT_RELIGIOUS_SCHOOL ,
     SELECT_OSCH ,
-    SELECT_PRE_SCHOOL
+    SELECT_PRE_SCHOOL,
+    SELECT_RADIUS
 )
 #================= GLOBAL VARIABLES =======================
 LAST_GEOCODED_TIME = "last geocoding time"
@@ -81,8 +82,6 @@ selected filters (and address if supplied) are return as a dictionary
     filter_choices = {}
     search_button = False
 
-
-
     with st.sidebar:
         st.header("Filter & Search")
 
@@ -95,6 +94,11 @@ selected filters (and address if supplied) are return as a dictionary
             st.info(f"📍 Address found: {user_location_data.address}")
         elif address and time.time() - st.session_state[LAST_GEOCODED_TIME] <= NOMINATIM_DELAY:
             st.caption("🔍 Searching for valid address...")
+
+        distance_to_school = st.multiselect(
+            "Search Within Radius (km):",
+            options=SELECT_RADIUS,
+            )
 
 
         with st.form(key="filter_form"):

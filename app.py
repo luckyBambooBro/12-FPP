@@ -74,79 +74,57 @@ def throttled_address_search(address, geolocator):
         st.session_state[LAST_SUCCESSFUL_LOCATION] = location
         return location
 
-def sidebar_filter_and_search(geolocator):
+def sidebar_filter_and_search():
     """
 Presents the filter options to the user in the sidebar. Once user clicks on "Search", all the 
 selected filters (and address if supplied) are return as a dictionary
 """
-    filter_choices = {}
-    search_button = False
+    
+    with st.form(key="filter_form"):
+        st.subheader("Core Criteria")
 
-    with st.sidebar:
-        st.header("Filter & Search")
+        school_type = st.selectbox(
+            "Select School Type:", 
+            options=SELECT_SCHOOL_TYPE,
+            index=SELECT_SCHOOL_TYPE.index("All") 
+        )
+        year_levels = st.multiselect(
+            "Select Year Level(s)",
+            options=SELECT_YEAR_LEVELS
+        )
 
-        address = st.text_input("Please enter your address:")
-        user_location_data = throttled_address_search(address, geolocator)
+        gender = st.multiselect(
+            "Select Gender",
+            options=SELECT_GENDER
+        )
 
-        #"address" will keep returning None, until it returns a valid geolocator address. Then the 
-        # following checks run
-        if user_location_data:
-            st.info(f"📍 Address found: {user_location_data.address}")
-        elif address and time.time() - st.session_state[LAST_GEOCODED_TIME] <= NOMINATIM_DELAY:
-            st.caption("🔍 Searching for valid address...")
+        religious = st.checkbox(SELECT_RELIGIOUS_SCHOOL)
+        oshc = st.checkbox(SELECT_OSCH)
+        pre_school = st.checkbox(SELECT_PRE_SCHOOL)
 
-        distance_to_school = st.multiselect(
-            "Search Within Radius (km):",
-            options=SELECT_RADIUS,
-            )
+        st.markdown("---")
 
-
-        with st.form(key="filter_form"):
-            st.subheader("Core Criteria")
-
-            school_type = st.selectbox(
-                "Select School Type:", 
-                options=SELECT_SCHOOL_TYPE,
-                index=SELECT_SCHOOL_TYPE.index("All") 
-            )
-            year_levels = st.multiselect(
-                "Select Year Level(s)",
-                options=SELECT_YEAR_LEVELS
-            )
-
-            gender = st.multiselect(
-                "Select Gender",
-                options=SELECT_GENDER
-            )
-
-            religious = st.checkbox(SELECT_RELIGIOUS_SCHOOL)
-            oshc = st.checkbox(SELECT_OSCH)
-            pre_school = st.checkbox(SELECT_PRE_SCHOOL)
-
-            st.markdown("---")
-
-            search_button = st.form_submit_button("Filter & Search")
-            if search_button:
-                st.success(f"Processing search for schools near you...")
-            
-            #Guard against empty filters
-            if not year_levels:
-                year_levels = SELECT_YEAR_LEVELS #"All" will be stripped later but its easier to include it for now 
-            if not gender:
-                gender = SELECT_GENDER #"All" will be stripped later but its easier to include it for now
-            
-            #create dictionary of filters
-            filter_choices = {
-                "school_type": [school_type],#string
-                "year levels": year_levels,#list
-                "gender": gender,#list
-                "religious": [religious], #boolean
-                "oshc": [oshc], #boolean
-                "pre_school": [pre_school] #boolean
-            }
+        search_button = st.form_submit_button("Filter & Search")
+        if search_button:
+            st.success(f"Processing search for schools near you...")
+        
+        #Guard against empty filters
+        if not year_levels:
+            year_levels = SELECT_YEAR_LEVELS #"All" will be stripped later but its easier to include it for now 
+        if not gender:
+            gender = SELECT_GENDER #"All" will be stripped later but its easier to include it for now
+        
+        #create dictionary of filters
+        filter_choices = {
+            "school_type": [school_type],#string
+            "year levels": year_levels,#list
+            "gender": gender,#list
+            "religious": [religious], #boolean
+            "oshc": [oshc], #boolean
+            "pre_school": [pre_school] #boolean
+        }
 
     return filter_choices, search_button
-               
 #===========================================
 
 #============= SCRIPT EXECUTION ============
@@ -163,10 +141,30 @@ st.title("🏫 School Locator Dashboard")
 schools_data = load_schools_data_cached()
 geolocator = initialise_geolocator()
 
+filter_choices = {}
+search_button = False
 
-filter_choices, search_button = sidebar_filter_and_search(geolocator)
+with st.sidebar:
+    st.header("Filter & Search")
 
+    address = st.text_input("Please enter your address:")
+    user_location_data = throttled_address_search(address, geolocator)
+
+    #"address" will keep returning None, until it returns a valid geolocator address. Then the 
+    # following checks run
+    if user_location_data:
+        st.info(f"📍 Address found: {user_location_data.address}")
+    elif address and time.time() - st.session_state[LAST_GEOCODED_TIME] <= NOMINATIM_DELAY:
+        st.caption("🔍 Searching for valid address...")
+
+    distance_to_school = st.selectbox(
+        "Search Within Radius (km):",
+        options=SELECT_RADIUS,
+        )
+
+    filter_choices, search_button = sidebar_filter_and_search()
 
 filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
+
 
 

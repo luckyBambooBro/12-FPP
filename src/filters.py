@@ -1,12 +1,11 @@
 import pprint, sys
 
 def convert_values_to_match_json_file(filter_choices):
+    """converts values in dictionary to usable values for filtering in backend"""
     for k, v in filter_choices.items():
-        filter_choices[k] = [item.lower() if isinstance(item, str) else item 
+        filter_choices[k] = [item.lower().replace("co-education", "co_ed") if isinstance(item, str) else item 
                              for item in v]
-        filter_choices[k] = [item.replace("co-education", "co_ed") if isinstance(item, str) else item 
-                             for item in v]
-        #TODO: FIX THE LINE ABOVE. GEMINI HAS IDENTIFIED THE ERROR
+        print(f"CONVERTED FILTER CHOICES = {filter_choices}")
     return filter_choices
 
 def obtain_filtered_schools(filter_choices, schools_data):
@@ -15,14 +14,11 @@ def obtain_filtered_schools(filter_choices, schools_data):
         return schools_data
 
     #removes any filters that contain "All" or False since theyre redundant 
-    print(f"FILTERS = {filter_choices}")
     filter_choices = {k: v for k, v in filter_choices.items() if "All" not in v and False not in v}
     if not filter_choices:
         print("No filters applied. Returning all schools")
         return schools_data
     filter_choices = convert_values_to_match_json_file(filter_choices)
-
-    print(filter_choices)
 
     try:
         current_list = schools_data

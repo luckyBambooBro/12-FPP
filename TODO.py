@@ -7,4 +7,8 @@ in filters.py obtain_filtered_schools:
         data
 """
 
-
+"""in app.py when i create {filter_choices}, for the keys(which are strings), i hard code the strings and
+ have left a note that they must match the json file. it would be good if i could make this more 
+ robust. consider enums with fields of what the keys should be then running for k in filter_choices.keys(),
+ if not k in enum, raise keyError
+"""

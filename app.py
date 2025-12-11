@@ -4,9 +4,17 @@ from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 import streamlit as st
 from src.filters import obtain_filtered_schools
 from src.load_schools_data import load_schools_data
+from src.sort_schools_data import sort_schools_data
 from src.config import (
     APP_NAME, NOMINATIM_DELAY, NOMINATIM_TIMEOUT,
     SCHOOLS_DATA_SRC,
+
+    GENDER,
+    SCHOOL_TYPE,
+    YEAR_LEVELS,
+    OSHC,
+    PRESCHOOL,
+    RELIGIOUS,
 
     SELECT_YEAR_LEVELS,
     SELECT_SCHOOL_TYPE,
@@ -46,7 +54,7 @@ def load_schools_data_cached(): #this function must stay in app.py due to the st
     """
     with st.spinner("Loading school data..."):
         schools_data = load_schools_data(SCHOOLS_DATA_SRC)
-        time.sleep(3) #TODO delete this. its only to show me the spinner is working while loading
+        time.sleep(2) #TODO delete this. its only to show me the spinner is working while loading
         return schools_data
 
 # =========================================================
@@ -117,12 +125,12 @@ selected filters (and address if supplied) are return as a dictionary
         #create dictionary of filters
         #keys must match data/schools.json keys
         filter_choices = {
-            "school type": [school_type],#string
-            "year levels": year_levels,#list
-            "gender": gender,#list
-            "religious": [religious], #boolean
-            "oshc": [oshc], #boolean
-            "preschool": [pre_school] #boolean
+            SCHOOL_TYPE: [school_type],#string
+            YEAR_LEVELS: year_levels,#list
+            GENDER: gender,#list
+            RELIGIOUS: [religious], #boolean
+            OSHC: [oshc], #boolean
+            PRESCHOOL: [pre_school] #boolean
         }
 
     return filter_choices, search_button
@@ -158,7 +166,7 @@ with st.sidebar:
     elif address and time.time() - st.session_state[LAST_GEOCODED_TIME] <= NOMINATIM_DELAY:
         st.caption("🔍 Searching for valid address...")
 
-    distance_to_school = st.selectbox(
+    user_selected_radius = st.selectbox(
         "Search Within Radius (km):",
         options=SELECT_RADIUS,
         )
@@ -167,5 +175,6 @@ with st.sidebar:
 
 filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
 
+sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)
 
 

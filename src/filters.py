@@ -8,7 +8,6 @@ def convert_values_to_match_json_file(filter_choices):
     return filter_choices
 
 def obtain_filtered_schools(filter_choices, schools_data):
-    print(filter_choices)
     if not filter_choices:
         print("No filters applied. Returning all schools")
         return schools_data
@@ -24,7 +23,6 @@ def obtain_filtered_schools(filter_choices, schools_data):
         current_list = schools_data
         for k, v in filter_choices.items():
             current_list = [school for school in current_list if school[k] in v]    
-        print(current_list)
         return current_list
     except KeyError:
         print(f"KeyError filtering school data") 

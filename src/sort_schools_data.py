@@ -12,16 +12,15 @@ def sort_schools_data(filtered_schools, user_address, user_selected_radius):
     if not filtered_schools:
         print("No schools found after filtering")
         return
-    elif not user_address:
+    if not user_address:
         return filtered_schools
     #elif user_selected_radius is None: doesnt matter, this condition is addressed in sort_by_distance()
-    elif user_address:
-        filtered_schools_with_distances = calculate_distance_user_to_schools(filtered_schools, user_address)
-        sorted_schools_list = sort_by_distance(filtered_schools_with_distances, user_selected_radius)
-        pprint.pprint(f"SORTED LIST:\n{sorted_schools_list}") #TODO remove this
-        #In future: can create other sorting methods below here:
-        return sorted_schools_list
-    return
+
+    filtered_schools_with_distances = calculate_distance_user_to_schools(filtered_schools, user_address)
+    sorted_schools_list = sort_by_distance(filtered_schools_with_distances, user_selected_radius)
+    #TODO In future: can create other sorting methods below here:
+    return sorted_schools_list
+
 
 def calculate_distance_user_to_schools(filtered_schools, user_address):
     for school in filtered_schools:
@@ -41,8 +40,12 @@ def sort_by_distance(filtered_schools_with_distances, user_selected_radius):
     if user_selected_radius is None:
         user_selected_radius = float("inf")
     #sorts schools by distance to users addres and returns list
-    # print(f"FILTERED SCHOOLS W DIST = {filtered_schools_with_distances}")
-    filtered_schools_with_distances = [school for school in filtered_schools_with_distances if school[DISTANCE_TO_USER] <= user_selected_radius]
-    filtered_schools_with_distances.sort(key=lambda school: school[DISTANCE_TO_USER])
-    return filtered_schools_with_distances
+    #initially did this with list comprehension, but a for loop allows us to use dict.get()
+    #which is safer in case one of the schools is missing the school[DISTANCE_TO_USER] key
+    schools_with_radius = []
+    for school in filtered_schools_with_distances:
+        if school.get(DISTANCE_TO_USER, float("inf")) <= user_selected_radius:
+            schools_with_radius.append(school)
     
+    schools_with_radius.sort(key=lambda x: x.get(DISTANCE_TO_USER, float("inf")))
+    return schools_with_radius

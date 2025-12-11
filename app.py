@@ -174,8 +174,9 @@ with st.sidebar:
     filter_choices, search_button = sidebar_filter_and_search()
 
 if search_button:
-
     filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
     sorted_schools_list = sort_schools_data(filtered_schools, user_location_data.point, user_selected_radius)
-
-
+    #TODO sorted_schoolls_list may return empty, so address this before displaying schools
+    #reults to user
+    for s in sorted_schools_list:
+        print(s)

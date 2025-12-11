@@ -30,7 +30,7 @@ def calculate_distance_user_to_schools(filtered_schools, user_address):
                 geodesic(school[SCHOOL_COORDINATES], user_address).km,
                 2)
         except KeyError as k_Error:
-            print(f"Unable to determine distance from {school[NAME]}\n{k_Error}")
+            print(f"kEYeRROR: Unable to determine distance from {school[NAME]}\n{k_Error}")
         except Exception as e:
             print(f"Unable to determine distance from {school[NAME]}\n{e}")
         else:
@@ -41,9 +41,8 @@ def sort_by_distance(filtered_schools_with_distances, user_selected_radius):
     if user_selected_radius is None:
         user_selected_radius = float("inf")
     #sorts schools by distance to users addres and returns list
-    print(f"FILTERED SCHOOLS W DIST = {filtered_schools_with_distances}")
+    # print(f"FILTERED SCHOOLS W DIST = {filtered_schools_with_distances}")
     filtered_schools_with_distances = [school for school in filtered_schools_with_distances if school[DISTANCE_TO_USER] <= user_selected_radius]
     filtered_schools_with_distances.sort(key=lambda school: school[DISTANCE_TO_USER])
-    pprint.pprint(filtered_schools_with_distances)
     return filtered_schools_with_distances
     

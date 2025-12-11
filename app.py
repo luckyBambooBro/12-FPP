@@ -176,7 +176,6 @@ with st.sidebar:
 if search_button:
 
     filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
-    print(filtered_schools)
-    sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)
+    sorted_schools_list = sort_schools_data(filtered_schools, user_location_data.point, user_selected_radius)
 
 

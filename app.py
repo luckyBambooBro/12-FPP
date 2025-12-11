@@ -173,8 +173,10 @@ with st.sidebar:
 
     filter_choices, search_button = sidebar_filter_and_search()
 
-filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
+if search_button:
 
-sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)
+    filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
+    print(filtered_schools)
+    sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)
 
 

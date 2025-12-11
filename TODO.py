@@ -6,3 +6,7 @@ in filters.py obtain_filtered_schools:
         make sure all schools have the correct keys in the backend when we preload the school
         data
 """
+
+"""another logistics error. if you select secondary schools + boys + religious
+CBC doesnt come up. you need to select combined for it to come up
+fix it so it comes up without combined"""

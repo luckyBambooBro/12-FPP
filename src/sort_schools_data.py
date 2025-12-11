@@ -12,7 +12,10 @@ def sort_schools_data(filtered_schools, user_address, user_selected_radius):
     if not filtered_schools:
         print("No schools found after filtering")
         return
-    elif user_address and user_selected_radius:
+    elif not user_address:
+        return filtered_schools
+    #elif user_selected_radius is None: doesnt matter, this condition is addressed in sort_by_distance()
+    elif user_address:
         filtered_schools_with_distances = calculate_distance_user_to_schools(filtered_schools, user_address)
         sorted_schools_list = sort_by_distance(filtered_schools_with_distances, user_selected_radius)
         pprint.pprint(f"SORTED LIST:\n{sorted_schools_list}") #TODO remove this
@@ -35,6 +38,8 @@ def calculate_distance_user_to_schools(filtered_schools, user_address):
     return filtered_schools
 
 def sort_by_distance(filtered_schools_with_distances, user_selected_radius):
+    if user_selected_radius is None:
+        user_selected_radius = float("inf")
     #sorts schools by distance to users addres and returns list
     print(f"FILTERED SCHOOLS W DIST = {filtered_schools_with_distances}")
     filtered_schools_with_distances = [school for school in filtered_schools_with_distances if school[DISTANCE_TO_USER] <= user_selected_radius]

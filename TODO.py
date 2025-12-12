@@ -9,4 +9,6 @@ in filters.py obtain_filtered_schools:
 
 """another logistics error. if you select secondary schools + boys + religious
 CBC doesnt come up. you need to select combined for it to come up
-fix it so it comes up without combined"""
+fix it so it comes up without combined
+
+ALSO SEE: load_schools_data.py modify_schools_data()"""

@@ -20,4 +20,3 @@ def load_schools_data(file_path):
         print(e)
         sys.exit(1)
     
-

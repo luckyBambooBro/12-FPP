@@ -18,7 +18,6 @@ def obtain_filtered_schools(filter_choices, schools_data):
         print("No filters applied. Returning all schools")
         return schools_data
     filter_choices = convert_values_to_match_json_file(filter_choices)
-
     try:
         current_list = schools_data
         for k, v in filter_choices.items():

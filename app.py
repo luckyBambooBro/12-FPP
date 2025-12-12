@@ -2,6 +2,7 @@ import json, sys, time
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 import streamlit as st
+from src.display_sorted_schools import display_sorted_schools
 from src.filters import obtain_filtered_schools
 from src.load_schools_data import load_schools_data
 from src.sort_schools_data import sort_schools_data
@@ -168,15 +169,24 @@ with st.sidebar:
 
     user_selected_radius = st.selectbox(
         "Search Within Radius (km):",
-        options=SELECT_RADIUS,
-        )
-
+        options=SELECT_RADIUS, 
+        index=SELECT_RADIUS.index(25)
+    )
+        
     filter_choices, search_button = sidebar_filter_and_search()
 
 if search_button:
     filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
-    sorted_schools_list = sort_schools_data(filtered_schools, user_location_data.point, user_selected_radius)
-    #TODO sorted_schoolls_list may return empty, so address this before displaying schools
-    #reults to user
-    for s in sorted_schools_list:
-        print(s)
+    if user_location_data:
+        sorted_schools_list = sort_schools_data(filtered_schools, user_location_data.point, user_selected_radius)
+    else:
+        sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)        
+    if not sorted_schools_list:
+        #guilty note i used gemini here because i dont know html
+        st.markdown(
+    "<div style='text-align: center; color: #ff4b4b;'><h3><strong>No schools found!</strong></h3></div>", 
+    unsafe_allow_html=True
+    )
+    else:
+        display_sorted_schools(sorted_schools_list)
+        

@@ -1,5 +1,6 @@
 from geopy.distance import geodesic
 import pprint
+import streamlit as st
 import sys
 from src.config import DISTANCE_TO_USER, NAME, SCHOOL_COORDINATES
 
@@ -10,7 +11,7 @@ def sort_schools_data(filtered_schools, user_address, user_selected_radius):
     so far. these other sorting modes may be built  later in this script
     """
     if not filtered_schools:
-        print("No schools found after filtering")
+        st.warning("No schools found matching your criteria")
         return
     if not user_address:
         return filtered_schools

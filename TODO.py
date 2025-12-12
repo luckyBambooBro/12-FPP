@@ -12,3 +12,7 @@ CBC doesnt come up. you need to select combined for it to come up
 fix it so it comes up without combined
 
 ALSO SEE: load_schools_data.py modify_schools_data()"""
+
+"""after clicking on filter & search button a popupo message says 
+"processing search for schools near you". try make this disappear
+after a few seconds"""

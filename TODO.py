@@ -16,3 +16,12 @@ ALSO SEE: load_schools_data.py modify_schools_data()"""
 """after clicking on filter & search button a popupo message says 
 "processing search for schools near you". try make this disappear
 after a few seconds"""
+
+"""Consider deleting this feature and message from app.py:
+
+    so the sidebar_success_msg_placeholder success message actually does work but since i only have 7 schools
+    the program computes it so quickly that we dont see the message. the time.sleep() is just to showcase the 
+    feature, otherwise we wouldnt see it. if we delete this, remember to delete it from sidebar_filter_and_search 
+    as well
+      
+    """

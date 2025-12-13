@@ -2,6 +2,7 @@
 SCHOOLS_DATA_SRC = "data/schools.json"
 
 #KEYS FOR SCHOOLS.JSON
+ADDRESS = "address"
 DISTANCE_TO_USER = "distance to user"
 GENDER = "gender"
 NAME = "name"
@@ -10,6 +11,7 @@ PRESCHOOL = "preschool"
 RELIGIOUS = "religious"
 SCHOOL_COORDINATES = "school_coordinates"
 SCHOOL_TYPE = "school_type"
+WEBSITE = "website"
 YEAR_LEVELS = "year_levels"
 
 #NOMINATUM variables (geolocator)

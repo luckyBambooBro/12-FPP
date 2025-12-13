@@ -25,6 +25,7 @@ from src.config import (
     SELECT_PRE_SCHOOL,
     SELECT_RADIUS
 )
+import time
 #================= GLOBAL VARIABLES =======================
 LAST_GEOCODED_TIME = "last geocoding time"
 LAST_SUCCESSFUL_LOCATION = "last successful location"
@@ -115,8 +116,9 @@ selected filters (and address if supplied) are return as a dictionary
 
         search_button = st.form_submit_button("Filter & Search")
         if search_button:
-            st.success(f"Processing search for schools near you...")
-        
+            sidebar_success_msg_placeholder = st.success(f"Processing search for schools near you...",icon="✅")
+        else:
+            sidebar_success_msg_placeholder = None
         #Guard against empty filters
         if not year_levels:
             year_levels = SELECT_YEAR_LEVELS #"All" will be stripped later but its easier to include it for now 
@@ -134,7 +136,7 @@ selected filters (and address if supplied) are return as a dictionary
             PRESCHOOL: [pre_school] #boolean
         }
 
-    return filter_choices, search_button
+    return filter_choices, search_button, sidebar_success_msg_placeholder
 #===========================================
 
 #============= SCRIPT EXECUTION ============
@@ -173,14 +175,22 @@ with st.sidebar:
         index=SELECT_RADIUS.index(25)
     )
         
-    filter_choices, search_button = sidebar_filter_and_search()
+    filter_choices, search_button, sidebar_success_msg_placeholder = sidebar_filter_and_search()
 
 if search_button:
     filtered_schools = obtain_filtered_schools(filter_choices, schools_data)
     if user_location_data:
         sorted_schools_list = sort_schools_data(filtered_schools, user_location_data.point, user_selected_radius)
     else:
-        sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)        
+        sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)  
+    
+    """so the sidebar_success_msg_placeholder success message actually does work but since i only have 7 schools
+    the program computes it so quickly that we dont see the message. the time.sleep() is just to showcase the 
+    feature, otherwise we wouldnt see it. if we delete this, remember to delete it from sidebar_filter_and_search 
+    as well"""
+    time.sleep(1)
+    sidebar_success_msg_placeholder.empty() 
+    
     if not sorted_schools_list:
         #guilty note i used gemini here because i dont know html
         st.markdown(

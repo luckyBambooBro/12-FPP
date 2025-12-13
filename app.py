@@ -184,10 +184,11 @@ if search_button:
     else:
         sorted_schools_list = sort_schools_data(filtered_schools, user_location_data, user_selected_radius)  
     
-    """so the sidebar_success_msg_placeholder success message actually does work but since i only have 7 schools
-    the program computes it so quickly that we dont see the message. the time.sleep() is just to showcase the 
-    feature, otherwise we wouldnt see it. if we delete this, remember to delete it from sidebar_filter_and_search 
-    as well"""
+    #Uncomment the below by highlighting all of it then pressing control + /. otherwise streamlit magic will print it
+    # """so the sidebar_success_msg_placeholder success message actually does work but since i only have 7 schools
+    # the program computes it so quickly that we dont see the message. the time.sleep() is just to showcase the 
+    # feature, otherwise we wouldnt see it. if we delete this, remember to delete it from sidebar_filter_and_search 
+    # as well"""
     time.sleep(1)
     sidebar_success_msg_placeholder.empty() 
     
